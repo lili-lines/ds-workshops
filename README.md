@@ -43,9 +43,8 @@ Le site est publié automatiquement sur GitHub Pages à chaque push sur `main` (
 . lgbm 
 . objet detection : lib facebook ou https://huggingface.co/nvidia/LocateAnything-3B for agri case
 . pipeline clasique ml
-. 
 
 
 support/détails/ref, slides, exercices, correction
-    time : 15min speak, 15min talk, 30min practice
+time : 30min speak & talk, 30min practice
 
