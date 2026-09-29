@@ -1,0 +1,5 @@
+mkdocs>=1.6,<2
+# click 8.2.2+ désactive le rechargement auto de `mkdocs serve`
+click<8.2.2
+mkdocs-material>=9.5,<10
+mkdocs-jupyter>=0.25

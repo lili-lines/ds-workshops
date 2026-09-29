@@ -1,0 +1,71 @@
+site_name: Ateliers data science
+site_description: Ateliers pratiques de data science pour ingénieurs
+site_url: https://lili-lines.github.io/ds-workshops/
+repo_url: https://github.com/lili-lines/ds-workshops
+repo_name: lili-lines/ds-workshops
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: fr
+  logo: assets/logo.png
+  favicon: assets/favicon.png
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.footer
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+    - content.footnote.tooltips
+  font:
+    text: JetBrains Mono
+    code: JetBrains Mono
+  palette:
+    primary: custom
+    accent: custom
+
+nav:
+  - Accueil: index.md
+  - "1. Online vs Batch":
+      - Cours: 1_online_batch/index.md
+      - Pratique: 1_online_batch/pratique.md
+      - Notebook: 1_online_batch/notebook_online_vs_batch.ipynb
+
+# Les slides Marp sont transformées en images par hooks/slides.py, pas en pages
+exclude_docs: |
+  slides.md
+
+hooks:
+  - hooks/slides.py
+
+watch:
+  - themes
+
+plugins:
+  - search:
+      lang: fr
+  - mkdocs-jupyter:
+      execute: false
+      include_source: true
+      ignore_h1_titles: true
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+extra_css:
+  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
+  - stylesheets/theme.css
+  - stylesheets/slides.css
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js
+  - javascripts/slides.js

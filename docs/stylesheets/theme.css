@@ -1,0 +1,113 @@
+/* Thème « terminal » : police monospace, une seule taille, pas de gras ni d'italique,
+   fond mauve, titres violet foncé précédés d'un carré, barre du haut verte. */
+
+/* Material redéfinit ses couleurs sur <body data-md-color-…> : on vise aussi ces attributs */
+:root,
+[data-md-color-scheme],
+[data-md-color-primary],
+[data-md-color-accent] {
+  --mauve: #f5f0fa;        /* fond du site, plus clair que les slides */
+  --mauve-fonce: #e9dff2;   /* blocs de code, en-têtes de tableau = fond des slides */
+  --mauve-slides: #e9dff2;
+  --violet: #4a148c;
+  --bandeau: #4b1e97;       /* barre du haut */
+
+  --md-default-bg-color: var(--mauve);
+  --md-default-fg-color: #000;
+  --md-default-fg-color--light: #000;
+  --md-default-fg-color--lighter: rgba(0, 0, 0, 0.35);
+  --md-default-fg-color--lightest: rgba(0, 0, 0, 0.15);
+
+  --md-primary-fg-color: var(--bandeau);
+  --md-primary-fg-color--light: var(--bandeau);
+  --md-primary-fg-color--dark: var(--bandeau);
+  --md-primary-bg-color: #fff;             /* texte blanc sur la barre violette */
+  --md-primary-bg-color--light: rgba(255, 255, 255, 0.7);
+
+  --md-accent-fg-color: var(--violet);
+  --md-typeset-a-color: var(--violet);
+
+  --md-code-bg-color: var(--mauve-fonce);
+  --md-code-fg-color: #000;
+
+  --md-footer-bg-color: var(--mauve-fonce);
+  --md-footer-bg-color--dark: var(--mauve-fonce);
+  --md-footer-fg-color: #000;
+  --md-footer-fg-color--light: #000;
+  --md-footer-fg-color--lighter: rgba(0, 0, 0, 0.6);
+}
+
+/* Une seule police, une seule taille, ni gras ni italique — partout */
+body * {
+  font-family: var(--md-text-font-family), monospace !important;
+  font-size: 0.8rem !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+}
+
+/* Titres : violet foncé, précédés d'un carré (plein pour h1-h2, vide en dessous) */
+.md-content :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--violet) !important;
+  letter-spacing: normal;
+  margin: 1.6em 0 0.8em;
+}
+
+.md-content :is(h1, h2)::before { content: "■ "; }
+.md-content :is(h3, h4, h5, h6)::before { content: "□ "; }
+
+.md-nav__title,
+.md-nav__item--section > .md-nav__link,
+.md-nav__link--active {
+  color: var(--violet) !important;
+}
+
+.md-nav__link--active {
+  text-decoration: underline;
+}
+
+/* Liens : soulignés, puisqu'on n'a ni gras ni couleur vive pour les distinguer */
+.md-typeset a {
+  text-decoration: underline;
+}
+
+/* Tableaux et blocs */
+.md-typeset table:not([class]) {
+  background: transparent;
+  border-color: var(--md-default-fg-color--lightest);
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--mauve-fonce);
+  color: #000;
+}
+
+.md-typeset blockquote {
+  color: #000;
+  border-left-color: var(--violet);
+}
+
+/* Notebook (mkdocs-jupyter) : mêmes couleurs */
+.jupyter-wrapper {
+  --jp-layout-color0: transparent;
+  --jp-cell-editor-background: var(--mauve-fonce);
+  --jp-content-font-color1: #000;
+}
+
+/* Badge « Open in Colab » agrandi */
+.md-typeset img.colab-badge {
+  height: 2rem;
+  width: auto;
+}
+
+/* Notes de bas de page : petits numéros en exposant (seule exception à la taille unique) */
+.md-typeset sup,
+.md-typeset sup * {
+  font-size: 0.6rem !important;
+}
+
+/* Logo rond dans la barre du haut, un peu plus grand que par défaut */
+.md-header__button.md-logo img {
+  height: 1.8rem;
+  width: 1.8rem;
+  border-radius: 50%;
+}

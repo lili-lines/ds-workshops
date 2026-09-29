@@ -1,0 +1,52 @@
+/* @theme terminal */
+
+@import 'default';
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+
+/* Police monospace, une seule taille, ni gras ni italique, tout aligné à gauche */
+section {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  line-height: 1.5;
+  color: #000;
+  background: #e9dff2;
+  border-top: 16px solid #4caf50;
+  padding: 50px 60px 50px;
+  place-content: start !important;  /* le thème de base centre verticalement le contenu */
+  text-align: left !important;
+}
+
+/* !important : le thème de base a des sélecteurs plus précis (strong, em, h1…) */
+section * {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: 400 !important;
+  font-style: normal !important;
+  text-align: left !important;
+}
+
+/* Titres : violet foncé, précédés d'un carré */
+section :is(h1, h2, h3, h4, h5, h6) {
+  color: #4a148c;
+  margin: 0 0 0.8em;
+  padding: 0;
+  border: none;
+}
+
+section :is(h1, h2)::before { content: '■ '; }
+section :is(h3, h4, h5, h6)::before { content: '□ '; }
+
+section a { color: #4a148c; text-decoration: underline; }
+
+section table { border-collapse: collapse; }
+section :is(th, td) { border: 1px solid rgba(0, 0, 0, 0.25); padding: 4px 12px; background: transparent; }
+section th { background: #ddd0ea; }
+section :is(table, tr, td) { background: transparent !important; }
+section th { background: #ddd0ea !important; }
+
+section :is(pre, code) { background: #ddd0ea; color: #000; }
+section pre { padding: 10px 14px; border-radius: 0; }
+
+section blockquote { color: #000; border-left: 4px solid #4a148c; padding-left: 14px; margin-left: 0; }
+
+section::after { color: #4a148c; font-size: 18px; }
