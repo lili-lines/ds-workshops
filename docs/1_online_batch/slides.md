@@ -7,132 +7,182 @@ size: 16:9
 
 <!-- _paginate: false -->
 
-# Online learning<br>vs Batch learning
-Apprendre une fois, ou apprendre en continu ?
-Cas d'usage : prédire la température d'une serre à partir de la météo.
+# Online learning vs Batch learning
+Learning from the flow, or not?
+<br>
+Use case: predict the temperature of a greenhouse from historical sensor data and outdoor weather.
+
+![h:300](img/plan_greenhouse.jpg) ![h:300](img/viz_sensor.jpg)
 
 ---
 
-## Le problème : une serre, ça change
-- Les saisons passent (hiver → printemps → été)
-- Les cultures changent, la serre est réaménagée
-- Les capteurs vieillissent, se décalent, tombent en panne
+<!-- _backgroundColor: white -->
 
-➡️ Un modèle appris « une bonne fois pour toutes » peut devenir faux sans que personne ne s'en rende compte.
+## Domain knowledge: greenhouse characteristics
+
+![h:500](img/greenhouse_sch.png)
 
 ---
 
-## C'est quoi, « apprendre » pour un modèle ?
-- Un modèle = une fonction `sortie = f(entrées)` avec des paramètres réglables
-- Apprendre = régler ces paramètres pour que les prédictions collent aux mesures passées
-- Exemple : `T_int ≈ a × T_ext + b × humidité + c × heure + d`
-  → le modèle cherche les bons `a`, `b`, `c`, `d`
+<!-- _footer: "¹ Candanedo, L. (2017). Appliances Energy Prediction. UCI Machine Learning Repository. https://archive.ics.uci.edu/dataset/374/appliances+energy+prediction" -->
 
-Analogie : étalonner un instrument à partir de mesures de référence.
+## Data
+
+For this workshop, public data: UCI Appliances Energy Prediction¹
+. indoor temperature/humidity sensors + outdoor weather station
+. recorded every 10 min, January → May 2016 (~20,000 rows)
+
+Questions to ask:
+. target? num or cat
+. features? num or cat
+. time feature? yes or no
+
+📊 Todo:
+Data analysis matters: it checks data quality and makes sure what we are looking for is actually in the data. It also guides the choice of model: linear or tree-based.
+
+---
+
+## What does it mean to train a model?
+. drawing: baby crow (model) in a river (information), next to a dam (information) + concepts floating in the water + IN/OUT
+. A model = a function `out = f(in)` with adjustable parameters
+
+Example:
+`T_int ≈ a × T_ext + b × humidity + c × hour + d`
+         → the model looks for the right `a`, `b`, `c`, `d`
+
+---
+
+<!-- _footer: "² scikit-learn, LinearRegression: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html<br>³ river, LinearRegression: https://riverml.xyz/latest/api/linear-model/LinearRegression/" -->
+
+## Our experiment
+Three learning strategies, same model linear regression, same inputs:
+1. 🧊 Frozen batch: trained on Jan & feb, never updated, scikit-learn²
+2. 🔁 Retrained batch: retrained every week on all past data, scikit-learn²
+3. 🌊 Online: updated at every measurement, river³
 
 ---
 
 ## 🧊 Batch learning
+
+<div class="cols">
+<div>
+
 ```
-[ historique complet ] ──► entraînement ──► modèle figé ──► prédictions
+full history
+  ↓
+features
+  ↓
+train (only once)
+  ↓
+frozen model
+  ↓
+┌──→ new features (t)
+│      ↓
+│    prediction
+│      ↓
+└──── next features (t+1)
+
 ```
-- On apprend en une fois sur un gros paquet (batch) de données
-- Le modèle est ensuite figé et déployé
-- Pour le mettre à jour : on refait tout l'entraînement
+Diagram 1: batch model, frozen
 
-Analogie : l'étalonnage en usine, fait une fois avant la livraison.
+</div>
+<div>
+
+- Learns once from a batch of data
+- The model is then frozen and deployed
+- To update it: retrain with all data
+
++/- pour la greenhouse: energy cost, model size, data storage
+
+</div>
+</div>
 
 ---
 
-## 🌊 Online learning
+<!-- _footer: "⁴ Online machine learning, Wikipedia: https://en.wikipedia.org/wiki/Online_machine_learning" -->
+
+## 🌊 Online learning⁴
+
+<div class="cols">
+<div>
+
 ```
-mesure 1 ──► prédire ──► apprendre ──┐
-mesure 2 ──► prédire ──► apprendre ──┤  le modèle évolue
-mesure 3 ──► prédire ──► apprendre ──┘  en permanence
+┌──→ new features (t)
+│      ↓
+│    target prediction
+│      ↓
+│    true target, measured
+│      ↓
+│    train: small correction
+│      ↓
+└──── next features (t+1)
 ```
-- Le modèle apprend à chaque nouvelle mesure, par une petite correction
-- On ne garde pas l'historique : une mesure est vue, utilisée, puis oubliée
-- Le modèle est toujours à jour
+Diagram 2: online model, learning on the flow
 
-Analogie : un régulateur adaptatif ou un filtre récursif (type Kalman).
+</div>
+<div>
 
----
+- The model learns from each new measurement, with a small correction
+- No history kept: each measurement is seen, used, then forgotten
+- The model is always up to date
 
-## La dérive (drift)
-Les données de demain ne ressemblent pas à celles d'hier.
+Pros (+) and cons (-):
+. follows data drift (e.g. climate change); you may need to define the type and speed of drift
+. energy cost, model size, data storage
 
-| Type de dérive | Exemple en serre |
-|---|---|
-| Progressive | les saisons |
-| Soudaine | changement de culture, nouvel écran thermique |
-| Récurrente | jour / nuit, semaine / week-end |
-| Capteur | décalage, capteur figé, panne |
+Time series specifics: forgetting, the past becomes outdated
 
-Le batch ne voit pas la dérive. L'online la suit.
+Analogy: an adaptive controller or a recursive filter (like a Kalman filter).
 
----
-
-## Évaluer honnêtement : ne jamais tricher avec le futur
-- Batch : on entraîne sur le passé, on teste sur la suite (jamais de mélange aléatoire sur des séries temporelles !)
-- Online : évaluation prequential = prédire d'abord, apprendre ensuite
-  → au moment de prédire, le modèle n'a jamais vu la réponse
+</div>
+</div>
 
 ---
 
-## Nos données
-- Données de serre réelles = privées ❌
-- On utilise un jeu public très proche : UCI Appliances Energy Prediction
-  - capteurs de température/humidité intérieurs + station météo extérieure
-  - une mesure toutes les 10 min, janvier → mai 2016 (~20 000 mesures)
-- Objectif : prédire la température intérieure à partir de la météo extérieure et de l'heure
+<!-- _footer: "⁵ scikit-learn, mean_absolute_error: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mean_absolute_error.html<br>⁶ river, metrics.MAE: https://riverml.xyz/latest/api/metrics/MAE/" -->
+
+## Evaluation
+
+Metric: mean absolute error (MAE), in °C (batch: scikit-learn⁵, online: river⁶)
+
+$$\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} \left| y_i - \hat{y}_i \right|$$
+
+. yᵢ: true value, ŷᵢ: predicted value, n: number of measurements
+. meaning: on average, how many °C is the model off?
+
+- Batch: train on the past, test on what comes next (⚠️never shuffle time series!)
+- Online: prequential evaluation = predict first, then learn
+  → when predicting, the model has never seen the answer
 
 ---
 
-## L'expérience
-Trois stratégies, même modèle (régression linéaire), mêmes entrées :
-1. 🧊 Batch figé : entraîné sur janvier, jamais mis à jour
-2. 🔁 Batch ré-entraîné chaque semaine sur tout l'historique
-3. 🌊 Online : mis à jour à chaque mesure (bibliothèque `river`)
+## Results: mean error (MAE) in °C
 
----
-
-## Résultats : erreur moyenne en °C
-
-| Mois | 🧊 Batch figé | 🔁 Batch hebdo | 🌊 Online |
+| Month | 🧊 Frozen batch | 🔁 Retrained batch | 🌊 Online |
 |---|---|---|---|
-| Janvier | 0,84 | – | 0,93 |
-| Février | 1,43 | 1,07 | 0,16 |
-| Mars | 1,72 | 0,83 | 0,14 |
-| Avril | 2,81 | 0,89 | 0,14 |
-| Mai | 5,07 | 1,33 | 0,18 |
+| January | 0.84 | – | 0.93 |
+| February | 1.43 | 1.07 | 0.16 |
+| March | 1.72 | 0.83 | 0.14 |
+| April | 2.81 | 0.89 | 0.14 |
+| May | 5.07 | 1.33 | 0.18 |
 
-Le batch figé se dégrade mois après mois. L'online reste stable.
-
----
-
-## ⚠️ Mais l'online a ses pièges
-- Il apprend aussi les erreurs : un capteur décalé de +10 °C pendant 3 jours → le modèle met ~5 jours à s'en remettre
-- Réglage sensible : un taux d'apprentissage trop grand → le modèle diverge (comme un gain trop fort dans une boucle de régulation)
-- Audit / reproductibilité : le modèle change sans cesse. Lequel a pris la décision d'hier à 14h ?
-- Démarrage à froid : au début, il ne sait rien (erreur plus élevée en janvier)
+The frozen batch gets worse month after month. Online stays stable.
 
 ---
 
-## Quand choisir quoi ?
+## Pros & cons
 
-| Si… | Alors |
-|---|---|
-| Le phénomène est stable, le modèle doit être validé / certifié | 🧊 Batch |
-| Ça change lentement, on a le temps de ré-entraîner | 🔁 Batch ré-entraîné |
-| Ça change vite, flux continu, peu de mémoire (embarqué) | 🌊 Online |
-| Dans tous les cas | 📈 surveiller l'erreur en production |
+| Strategy | + | − |
+|---|---|---|
+| 🌊 Online (river) | + no retraining on all data: low memory (RAM)<br>+ no initial training set: learns from the flow | - faulty sensor → the model learns the errors<br> - sensitive tuning: learning rate too high → diverges |
+| 🧊 Frozen batch | + simple and stable: easy to validate and audit | - gets outdated when conditions change (drift) |
+| 🔁 Retrained batch | + follows changes, each version can be checked | - keeps all history, retraining cost every time<br> - needs trainset to start |
+
+The online approach is closer to how things live and change in real life. It helps build models that are ready to leave the lab.
 
 ---
 
-## À retenir
-1. Un modèle n'est bon que tant que le monde ressemble à ses données d'entraînement
-2. Le batch est simple et robuste, mais vieillit
-3. L'online s'adapte, mais apprend tout, y compris les pannes
-4. En pratique : du batch ré-entraîné ou de l'online, avec un contrôle qualité des données en amont
+## Notebook
+Time to practice 🤖🤖🤖
 
-➡️ Place à la pratique : le notebook !
+---

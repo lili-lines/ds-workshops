@@ -6,7 +6,7 @@
 [data-md-color-scheme],
 [data-md-color-primary],
 [data-md-color-accent] {
-  --mauve: #f5f0fa;        /* fond du site, plus clair que les slides */
+  --mauve: #f2ebf6;        /* fond du site, plus clair que les slides */
   --mauve-fonce: #e9dff2;   /* blocs de code, en-têtes de tableau = fond des slides */
   --mauve-slides: #e9dff2;
   --violet: #4a148c;

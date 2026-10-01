@@ -29,8 +29,11 @@ nav:
   - Accueil: index.md
   - "1. Online vs Batch":
       - Cours: 1_online_batch/index.md
-      - Pratique: 1_online_batch/pratique.md
       - Notebook: 1_online_batch/notebook_online_vs_batch.ipynb
+  - "2. Another idea":
+      - Cours: 2_another_idea/index.md
+      - Notebook: 2_another_idea/notebook.ipynb
+
 
 # Les slides Marp sont transformées en images par hooks/slides.py, pas en pages
 exclude_docs: |

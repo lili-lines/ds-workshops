@@ -8,10 +8,12 @@ Chaque atelier commence par des slides et un cours détaillé, puis se poursuit 
 | # | Atelier | Thème |
 |---|---|---|
 | 1 | [Online learning vs Batch learning](1_online_batch/index.md) | Prédire la température d'une serre |
+| 2 | [Another idea](2_another_idea/index.md) | D'autre idées d'atelier |
+
 
 ## Comment suivre un atelier
 
 1. Cours : parcourez les slides en haut de la page (flèches, clic ou glisser), puis lisez le cours détaillé en dessous.
-2. Pratique : ouvrez le notebook dans Colab avec le bouton « Open in Colab » et suivez les consignes.
+2. Pratique : sur la page Notebook, cliquez sur « Open in Colab » et suivez les consignes.
 
 Il vous faut seulement un compte Google pour utiliser Colab.

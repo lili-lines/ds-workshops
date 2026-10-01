@@ -1,4 +1,4 @@
-# Online learning vs Batch learning
+# Online vs Batch learning, presentation
 
 [[slides]]
 

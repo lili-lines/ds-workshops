@@ -16,6 +16,7 @@ MARQUEUR = "[[slides]]"
 MARP = "@marp-team/marp-cli@4"
 CACHE = Path(".cache/slides")
 THEMES = Path("themes")
+IMAGES = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"}
 
 
 def _dossiers_slides(docs_dir):
@@ -28,7 +29,9 @@ def _marp(*args):
     if npx is None:
         raise RuntimeError("npx introuvable : installez Node.js pour générer les slides")
     # --no-stdin : sinon Marp attend du Markdown sur l'entrée standard et bloque
-    subprocess.run([npx, "--yes", MARP, "--no-stdin", *args, "--theme-set", str(THEMES)],
+    # --allow-local-files : sinon les images du dossier de l'atelier ne sont pas rendues
+    # --html : autorise les <div> utilisés pour les mises en page en colonnes
+    subprocess.run([npx, "--yes", MARP, "--no-stdin", "--allow-local-files", "--html", *args, "--theme-set", str(THEMES)],
                    stdin=subprocess.DEVNULL, check=True, capture_output=True, timeout=300)
 
 
@@ -37,7 +40,8 @@ def on_pre_build(config):
     for src, rel in _dossiers_slides(config["docs_dir"]):
         out = CACHE / rel
         pdf = out / "slides.pdf"
-        if pdf.exists() and pdf.stat().st_mtime >= max(src.stat().st_mtime, maj_themes):
+        maj_images = max((f.stat().st_mtime for f in src.parent.rglob("*") if f.suffix.lower() in IMAGES), default=0)
+        if pdf.exists() and any(out.glob("slide.*.png")) and pdf.stat().st_mtime >= max(src.stat().st_mtime, maj_themes, maj_images):
             continue  # déjà à jour
         log.info("Génération des slides : %s", rel)
         out.mkdir(parents=True, exist_ok=True)
