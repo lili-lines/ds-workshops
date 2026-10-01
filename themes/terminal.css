@@ -82,3 +82,17 @@ section .cols {
 section .cols > div > :first-child { margin-top: 0; }
 /* la légende prend la largeur du schéma au lieu d'élargir la colonne */
 section .cols pre + p { width: 0; min-width: 100%; }
+
+/* Deux colonnes égales : <div class="cols2"><div>…</div><div>…</div></div> */
+section .cols2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
+  align-items: start;
+}
+section .cols2 img { max-width: 100%; }
+/* Variante : colonne gauche plus large (≈ 60 / 40), pour une image */
+section .cols2.wide-left { grid-template-columns: 3fr 2fr; }
+
+/* Texte un peu plus petit dans un bloc : <div class="small"> */
+section .small { font-size: 20px !important; }

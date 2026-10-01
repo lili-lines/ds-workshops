@@ -20,7 +20,25 @@ Use case: predict the temperature of a greenhouse from historical sensor data an
 
 ## Domain knowledge: greenhouse characteristics
 
-![h:500](img/greenhouse_sch.png)
+<div class="cols2 wide-left">
+<div>
+
+![](img/greenhouse_sch.png)
+
+</div>
+<div class="small">
+
+Goal: keep temperature and humidity in the right range for the plants
+
+Why it is hard to predict:
+. fast changes: sun +10 °C in an hour
+. slow changes: plant growth, seasons, new crops
+. every greenhouse is different, little training data
+
+→ the model must keep up with changes
+
+</div>
+</div>
 
 ---
 
@@ -42,12 +60,29 @@ Data analysis matters: it checks data quality and makes sure what we are looking
 
 ---
 
-## What does it mean to train a model?
-. drawing: baby crow (model) in a river (information), next to a dam (information) + concepts floating in the water + IN/OUT
+## Train a model
+
+<div class="cols2">
+<div>
+
+![h:240](img/batch.png)
+
+### Batch learning
+
+</div>
+<div>
+
+![h:240](img/online.png)
+
+### Online learning
+
+</div>
+</div>
+
 . A model = a function `out = f(in)` with adjustable parameters
 
 Example:
-`T_int ≈ a × T_ext + b × humidity + c × hour + d`
+`T_in ≈ a × T_out + b × humidity + c × hour + d`
          → the model looks for the right `a`, `b`, `c`, `d`
 
 ---
@@ -122,17 +157,14 @@ Diagram 2: online model, learning on the flow
 </div>
 <div>
 
-- The model learns from each new measurement, with a small correction
+- The model learns from each new data, with a small correction
 - No history kept: each measurement is seen, used, then forgotten
-- The model is always up to date
+- The model suis le flow
+- plus proche de la réalité
 
 Pros (+) and cons (-):
 . follows data drift (e.g. climate change); you may need to define the type and speed of drift
 . energy cost, model size, data storage
-
-Time series specifics: forgetting, the past becomes outdated
-
-Analogy: an adaptive controller or a recursive filter (like a Kalman filter).
 
 </div>
 </div>
@@ -143,7 +175,8 @@ Analogy: an adaptive controller or a recursive filter (like a Kalman filter).
 
 ## Evaluation
 
-Metric: mean absolute error (MAE), in °C (batch: scikit-learn⁵, online: river⁶)
+Metric: mean absolute error (MAE), in °C <br>
+batch: scikit-learn⁵, online: river⁶
 
 $$\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} \left| y_i - \hat{y}_i \right|$$
 
@@ -174,9 +207,9 @@ The frozen batch gets worse month after month. Online stays stable.
 
 | Strategy | + | − |
 |---|---|---|
-| 🌊 Online (river) | + no retraining on all data: low memory (RAM)<br>+ no initial training set: learns from the flow | - faulty sensor → the model learns the errors<br> - sensitive tuning: learning rate too high → diverges |
-| 🧊 Frozen batch | + simple and stable: easy to validate and audit | - gets outdated when conditions change (drift) |
-| 🔁 Retrained batch | + follows changes, each version can be checked | - keeps all history, retraining cost every time<br> - needs trainset to start |
+| 🌊 Online (river) | + no retraining on all data: low memory (RAM)<br>+ no initial training set: learns from the flow | - faulty sensor → the model learns the errors<br>- tricky tuning: learning rate too high → diverges |
+| 🧊 Frozen batch | + simple and stable: easy to validate and audit | - gets outdated when conditions change (drift)<br>- needs training data to start |
+| 🔁 Retrained batch | + follows changes, each version can be checked | - keeps all history, retraining cost every time<br>- needs training data to start |
 
 The online approach is closer to how things live and change in real life. It helps build models that are ready to leave the lab.
 

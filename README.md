@@ -1,32 +1,34 @@
 # ds-workshops
 
-Ateliers de data science.
+Data science workshops.
 
-Lien vers le contenu des ateliers : https://lili-lines.github.io/ds-workshops/**
+Workshop content: https://lili-lines.github.io/ds-workshops/
 
-## Organisation
+## Structure
 
 ```
 docs/
-  index.md                  page d'accueil
-  <n>_<atelier>/
-    slides.md               slides au format Marp (séparées par ---)
-    index.md                cours détaillé ; [[slides]] y insère la visionneuse
+  index.md                  home page
+  <n>_<workshop>/
+    slides.md               Marp slides (separated by ---)
+    index.md                detailed course; [[slides]] inserts the slide viewer
     *.ipynb                 notebook
-hooks/slides.py             transforme slides.md en images + PDF au build
+hooks/slides.py             turns slides.md into images + PDF at build time
 ```
 
-Pour ajouter un atelier : copier un dossier existant, puis l'ajouter dans `nav` de `mkdocs.yml`.
+To add a workshop: copy an existing folder, then add it to `nav` in `mkdocs.yml`.
 
-## Travailler en local
+## Work locally
 
-Prérequis : Python et Node.js (Marp est lancé via `npx`).
+Requirements: Python and Node.js (Marp runs through `npx`).
 
 ```bash
 pip install -r requirements.txt
-mkdocs serve          # http://127.0.0.1:8000, rechargé à chaque modification
+mkdocs serve          # http://127.0.0.1:8000, reloads on every change
 ```
 
-Extension VS Code slides vizu : *Marp for VS Code*.
+Restart `mkdocs serve` after changing `hooks/slides.py`: hooks are not reloaded automatically.
 
-Le site est publié automatiquement sur GitHub Pages à chaque push sur `main` (`.github/workflows/pages.yml`).
+VS Code extension to preview slides: Marp for VS Code.
+
+The site is published to GitHub Pages on every push to `main` (`.github/workflows/pages.yml`).

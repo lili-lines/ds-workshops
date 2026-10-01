@@ -1,5 +1,5 @@
-site_name: Ateliers data science
-site_description: Ateliers pratiques de data science pour ingénieurs
+site_name: Data science workshops
+site_description: Hands-on data science workshops for engineers
 site_url: https://lili-lines.github.io/ds-workshops/
 repo_url: https://github.com/lili-lines/ds-workshops
 repo_name: lili-lines/ds-workshops
@@ -7,7 +7,7 @@ edit_uri: edit/main/docs/
 
 theme:
   name: material
-  language: fr
+  language: en
   logo: assets/logo.png
   favicon: assets/favicon.png
   features:
@@ -26,12 +26,12 @@ theme:
     accent: custom
 
 nav:
-  - Accueil: index.md
+  - Home: index.md
   - "1. Online vs Batch":
-      - Cours: 1_online_batch/index.md
+      - Course: 1_online_batch/index.md
       - Notebook: 1_online_batch/notebook_online_vs_batch.ipynb
   - "2. Another idea":
-      - Cours: 2_another_idea/index.md
+      - Course: 2_another_idea/index.md
       - Notebook: 2_another_idea/notebook.ipynb
 
 
@@ -47,7 +47,7 @@ watch:
 
 plugins:
   - search:
-      lang: fr
+      lang: en
   - mkdocs-jupyter:
       execute: false
       include_source: true
@@ -63,6 +63,8 @@ markdown_extensions:
       permalink: true
   - pymdownx.highlight
   - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true
 
 extra_css:
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css
@@ -72,3 +74,5 @@ extra_css:
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js
   - javascripts/slides.js
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-svg.js

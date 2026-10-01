@@ -7,12 +7,12 @@ size: 16:9
 
 <!-- _paginate: false -->
 
-# Titre de l'atelier
+# Workshop title
 
-Sous-titre
+Subtitle
 
 ---
 
-## Première slide
+## First slide
 
 - ...

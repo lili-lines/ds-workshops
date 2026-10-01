@@ -111,3 +111,9 @@ body * {
   width: 1.8rem;
   border-radius: 50%;
 }
+
+/* Légende sous un tableau ou une figure : ligne suivie de { .caption } */
+.md-typeset .caption {
+  color: var(--violet);
+  margin-top: -0.6em;
+}

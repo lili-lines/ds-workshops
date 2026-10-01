@@ -60,7 +60,7 @@ def _visionneuse(images, prefixe):
         f'<div class="swiper-slide"><img src="{prefixe}{img}" alt="Slide {i}" loading="lazy"></div>'
         for i, img in enumerate(images, 1))
     miniatures = "\n".join(
-        f'<div class="swiper-slide"><img src="{prefixe}{img}" alt="Miniature {i}" loading="lazy"></div>'
+        f'<div class="swiper-slide"><img src="{prefixe}{img}" alt="Thumbnail {i}" loading="lazy"></div>'
         for i, img in enumerate(images, 1))
     return f"""
 <div class="slides-viewer">
@@ -74,8 +74,8 @@ def _visionneuse(images, prefixe):
 <div class="slides-toolbar">
 <span class="slides-counter"></span>
 <span class="slides-actions">
-<a href="{prefixe}slides.pdf" download>Télécharger en PDF</a>
-<button type="button" class="slides-fullscreen">Plein écran</button>
+<a href="{prefixe}slides.pdf" download>Download PDF</a>
+<button type="button" class="slides-fullscreen">Full screen</button>
 </span>
 </div>
 <div class="swiper slides-thumbs">
@@ -94,7 +94,7 @@ def on_page_markdown(markdown, page, config, files):
     images = sorted(p.name for p in (CACHE / rel).glob("slide.*.png"))
     if not images:
         log.warning("Aucune slide trouvée pour %s", page.file.src_uri)
-        remplacement = '!!! warning "Slides indisponibles"\n    Les slides n\'ont pas pu être générées (Node.js est-il installé ?).'
+        remplacement = '!!! warning "Slides unavailable"\n    The slides could not be generated (is Node.js installed?).'
     else:
         cible = posixpath.join(rel, "slides") + "/"
         prefixe = posixpath.relpath(cible, page.url or ".") + "/" if page.url else cible

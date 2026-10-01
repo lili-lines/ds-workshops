@@ -1,19 +1,18 @@
-# Workshop machine learning
+# Machine learning workshops
 
-Des ateliers pratiques de machine learning générale, et aussi appliqué à l'agriculture.
-Chaque atelier commence par des slides et un cours détaillé, puis se poursuit par un notebook à exécuter dans Google Colab.
+Hands-on machine learning workshops, general and applied to agriculture.
+Each workshop starts with slides and a detailed course, then continues with a notebook to run in Google Colab.
 
-## Ateliers
+## Workshops
 
-| # | Atelier | Thème |
+| # | Workshop | Topic |
 |---|---|---|
-| 1 | [Online learning vs Batch learning](1_online_batch/index.md) | Prédire la température d'une serre |
-| 2 | [Another idea](2_another_idea/index.md) | D'autre idées d'atelier |
+| 1 | [Online learning vs Batch learning](1_online_batch/index.md) | Predict the temperature of a greenhouse |
+| 2 | [Another idea](2_another_idea/index.md) | Other workshop ideas |
 
+## How to follow a workshop
 
-## Comment suivre un atelier
+1. Course: browse the slides at the top of the page, then read the detailed course below.
+2. Practice: on the Notebook page, click "Open in Colab" and follow the instructions.
 
-1. Cours : parcourez les slides en haut de la page (flèches, clic ou glisser), puis lisez le cours détaillé en dessous.
-2. Pratique : sur la page Notebook, cliquez sur « Open in Colab » et suivez les consignes.
-
-Il vous faut seulement un compte Google pour utiliser Colab.
+You only need a Google account to use Colab.

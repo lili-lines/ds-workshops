@@ -1,24 +1,15 @@
-# Titre de l'atelier
+# Workshop title
 
 [[slides]]
 
-## 1. Première partie
 
-...
+## Other workshop ideas
 
-## Idée d'autre workshop
+- machine learning starter: [mlcourse.ai](https://mlcourse.ai/book/index.html)
+- online learning with another model, and agriculture use case
+- linear regression + feature engineering: show that well-prepared data does almost all the work
+- LightGBM
+- object detection: Facebook library or [LocateAnything-3B](https://huggingface.co/nvidia/LocateAnything-3B) for an agriculture use case
 
-. machine learning starter : https://mlcourse.ai/book/index.html
-. online another model for agriculture case
-. reg lin + feature ing : montrer que les données bien préparé font casi tout le boulot
-. time series
-. lgbm 
-. objet detection : lib facebook ou https://huggingface.co/nvidia/LocateAnything-3B for agri case
-. 
-. pipeline clasique ml
-
-
-
-support/détails/ref, slides, exercices, correction
-time : 30min speak & talk, 30min practice
-
+<br>
+Format: 15 min talk & discussion, 45 min practice
