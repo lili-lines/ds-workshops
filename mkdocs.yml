@@ -33,6 +33,8 @@ nav:
   - "2. Another idea":
       - Course: 2_another_idea/index.md
       - Notebook: 2_another_idea/notebook.ipynb
+  - "3. FLE Percy Jackson":
+      - Course: 3_fle_percy_jackson/index.md
 
 
 # Les slides Marp sont transformées en images par hooks/slides.py, pas en pages

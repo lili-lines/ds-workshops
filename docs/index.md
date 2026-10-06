@@ -9,6 +9,7 @@ Each workshop starts with slides and a detailed course, then continues with a no
 |---|---|---|
 | 1 | [Online learning vs Batch learning](1_online_batch/index.md) | Predict the temperature of a greenhouse |
 | 2 | [Another idea](2_another_idea/index.md) | Other workshop ideas |
+| 3 | [FLE Percy Jackson](3_fle_percy_jackson/index.md) | Français langue étrangère autour de Percy Jackson |
 
 ## How to follow a workshop
 

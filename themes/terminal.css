@@ -56,7 +56,7 @@ section blockquote { color: #000; border-left: 4px solid #4a148c; padding-left: 
 section::after { color: #4a148c; font-size: 18px; content: attr(data-marpit-pagination) ' / ' attr(data-marpit-pagination-total); }
 
 /* Légende d'un schéma : paragraphe juste après un bloc de code */
-section pre + p { color: #4a148c; margin-top: 0.3em; }
+section .cols pre + p { color: #4a148c; margin-top: 0.3em; }
 
 /* Références (directive _footer) : en bas de la slide, un peu plus petites que le texte */
 section footer {

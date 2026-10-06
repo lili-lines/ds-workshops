@@ -5,6 +5,7 @@ Les images sont générées dans `.cache/slides/` (hors de docs/, pour ne pas
 relancer `mkdocs serve` en boucle) puis copiées dans le site à la fin du build.
 """
 import logging
+import os
 import posixpath
 import shutil
 import subprocess
@@ -41,7 +42,8 @@ def on_pre_build(config):
         out = CACHE / rel
         pdf = out / "slides.pdf"
         maj_images = max((f.stat().st_mtime for f in src.parent.rglob("*") if f.suffix.lower() in IMAGES), default=0)
-        if pdf.exists() and any(out.glob("slide.*.png")) and pdf.stat().st_mtime >= max(src.stat().st_mtime, maj_themes, maj_images):
+        maj_sources = max(src.stat().st_mtime, maj_themes, maj_images)
+        if pdf.exists() and any(out.glob("slide.*.png")) and pdf.stat().st_mtime >= maj_sources:
             continue  # déjà à jour
         log.info("Génération des slides : %s", rel)
         out.mkdir(parents=True, exist_ok=True)
@@ -50,6 +52,9 @@ def on_pre_build(config):
         try:
             _marp(str(src), "--images", "png", "--image-scale", "1.5", "-o", str(out / "slide.png"))
             _marp(str(src), "--pdf", "-o", str(pdf))
+            # Le PDF prend la date des sources au début de la génération : si slides.md
+            # est modifié pendant la génération, le prochain build refera les slides.
+            os.utime(pdf, (maj_sources, maj_sources))
         except (RuntimeError, subprocess.SubprocessError) as e:
             shutil.rmtree(out, ignore_errors=True)
             log.warning("Slides non générées pour %s : %s", rel, getattr(e, "stderr", e))
